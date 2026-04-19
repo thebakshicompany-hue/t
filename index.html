@@ -9,7 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <!-- Marked for Markdown to HTML -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- Quill Rich Text Editor -->
@@ -107,7 +108,9 @@
             scrollbar-width: none;
         }
 
-        .tabs-container::-webkit-scrollbar { display: none; }
+        .tabs-container::-webkit-scrollbar {
+            display: none;
+        }
 
         .tab-btn {
             background: transparent;
@@ -145,8 +148,15 @@
         }
 
         @keyframes m3-entrance {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         /* AI SURFACE CARD (M3 Elevated Surface) */
@@ -159,7 +169,7 @@
             flex-direction: column;
             gap: 24px;
             border: 1px solid var(--m3-surface-variant);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
 
         .ai-header {
@@ -225,12 +235,12 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
             align-self: flex-end;
         }
 
         .ai-generate-btn:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             background: #d9c8ff;
         }
 
@@ -278,7 +288,11 @@
             background: #fff;
         }
 
-        .ql-editor { padding: 40px !important; line-height: 1.8 !important; font-size: 1.1rem; }
+        .ql-editor {
+            padding: 40px !important;
+            line-height: 1.8 !important;
+            font-size: 1.1rem;
+        }
 
         /* CHAT AREA (M3 Surfaces) */
         .chat-area {
@@ -337,17 +351,39 @@
             gap: 8px;
             transition: 0.2s;
         }
-        
-        .btn-export:hover { filter: brightness(1.1); }
+
+        .btn-export:hover {
+            filter: brightness(1.1);
+        }
 
         /* LOADER */
-        .spin { animation: m3-spin 1s linear infinite; }
-        @keyframes m3-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .spin {
+            animation: m3-spin 1s linear infinite;
+        }
+
+        @keyframes m3-spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
         /* SCROLLBAR */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--m3-background); }
-        ::-webkit-scrollbar-thumb { background: var(--m3-surface-variant); border-radius: 10px; }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--m3-background);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--m3-surface-variant);
+            border-radius: 10px;
+        }
     </style>
 </head>
 
@@ -426,7 +462,8 @@
                 <div class="ai-header">
                     <div>
                         <h2>Legal Fact Checker</h2>
-                        <div class="ai-badge" style="background: var(--m3-secondary-container); color: var(--m3-on-secondary-container);">
+                        <div class="ai-badge"
+                            style="background: var(--m3-secondary-container); color: var(--m3-on-secondary-container);">
                             <span class="material-symbols-outlined" style="font-size: 16px;">verified_user</span>
                             INDIAN LAW SPECIALIST
                         </div>
@@ -458,15 +495,15 @@
                 <div class="ai-header">
                     <div>
                         <h2>Case Research Notes</h2>
-                        <div class="ai-badge" style="background: var(--m3-secondary-container); color: var(--m3-on-secondary-container);">
+                        <div class="ai-badge"
+                            style="background: var(--m3-secondary-container); color: var(--m3-on-secondary-container);">
                             <span class="material-symbols-outlined" style="font-size: 16px;">save</span>
                             AUTO-SYNC ACTIVE
                         </div>
                     </div>
                 </div>
 
-                <textarea id="notesArea" class="ai-input-area"
-                    style="min-height: 500px; line-height: 1.8;"
+                <textarea id="notesArea" class="ai-input-area" style="min-height: 500px; line-height: 1.8;"
                     placeholder="Enter case research notes. Data is saved automatically to your device..."
                     oninput="saveNotes()"></textarea>
             </div>
@@ -546,7 +583,7 @@
 
                 const contentType = response.headers.get("content-type");
                 let data;
-                
+
                 if (contentType && contentType.includes("application/json")) {
                     data = await response.json();
                 } else {
@@ -560,11 +597,11 @@
                     throw new Error(`[${response.status}] ${errorMsg}`);
                 }
 
-                if (data.choices && data.choices.length > 0) {
+                if (data.choices && data.choices.length > 0 && data.choices[0].message && data.choices[0].message.content) {
                     const content = data.choices[0].message.content;
 
                     // Parse markdown to HTML
-                    const htmlContent = marked.parse(content);
+                    const htmlContent = (typeof marked !== 'undefined') ? marked.parse(String(content || "")) : String(content || "");
 
                     // Set content in Quill
                     quill.clipboard.dangerouslyPasteHTML(htmlContent);
@@ -679,7 +716,7 @@
 
                 const contentType = response.headers.get("content-type");
                 let data;
-                
+
                 if (contentType && contentType.includes("application/json")) {
                     data = await response.json();
                 } else {
@@ -693,11 +730,11 @@
                     throw new Error(`[${response.status}] ${errorMsg}`);
                 }
 
-                if (data.choices && data.choices.length > 0) {
+                if (data.choices && data.choices.length > 0 && data.choices[0].message && data.choices[0].message.content) {
                     const answer = data.choices[0].message.content;
                     checkerHistory.push({ role: "assistant", content: answer });
 
-                    const htmlAnswer = marked.parse(answer);
+                    const htmlAnswer = (typeof marked !== 'undefined') ? marked.parse(String(answer || "")) : String(answer || "");
                     chatArea.innerHTML += `<div class="message ai-msg">${htmlAnswer}</div>`;
                     chatArea.scrollTop = chatArea.scrollHeight;
                 } else {
