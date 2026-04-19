@@ -1,9 +1,0 @@
-[build]
-  functions = "functions"
-
-# Default SPA redirect - excluded functions to be safe
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = false
